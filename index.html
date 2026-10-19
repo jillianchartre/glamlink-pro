@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8edf0">
+
+<title>GlamLink Pro | Beauty Meets Opportunity</title>
+
+<meta name="description" content="Discover beauty professionals, request appointments, and find freelance beauty work with GlamLink Pro.">
+
+<style>
+:root {
+  --pink: #e9a9bb;
+  --light-pink: #fff0f4;
+  --cream: #fffaf6;
+  --dark: #21171c;
+  --muted: #796d73;
+  --gold: #b58b55;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,250,246,0.96);
+  border-bottom: 1px solid #f0e4e7;
+  backdrop-filter: blur(12px);
+}
+
+.nav {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.logo span {
+  color: #c66d8a;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.hero {
+  padding: 65px 20px 45px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at top, #f8dce5, transparent 65%),
+    var(--cream);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #a65c76;
+}
+
+.hero h1 {
+  font-family: Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(39px, 8vw, 68px);
+  line-height: 1.06;
+  letter-spacing: -2px;
+  max-width: 750px;
+  margin: 20px auto;
+}
+
+.hero h1 em {
+  color: #c66d8a;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.search-box {
+  max-width: 620px;
+  margin: 28px auto 0;
+  padding: 8px;
+  background: white;
+  border: 1px solid #f0dfe5;
+  border-radius: 18px;
+  display: flex;
+  gap: 8px;
+  box-shadow: 0 10px 35px #b77b8a12;
+}
+
+.search-box input {
+  min-width: 0;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px;
+  background: transparent;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 13px 17px;
+  font-weight: 800;
+  background: var(--dark);
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-pink {
+  background: #d989a2;
+  color: #25151c;
+}
+
+.btn-light {
+  background: var(--light-pink);
+  color: #77384d;
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+section {
+  max-width: 1100px;
+  padding: 45px 20px;
+  margin: auto;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.section-heading h2 {
+  font-family: Georgia, serif;
+  font-size: 31px;
+  font-weight: 500;
+  margin: 8px 0;
+}
+
+.section-heading p {
+  color: var(--muted);
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.category {
+  background: white;
+  border: 1px solid #f1e3e7;
+  padding: 18px 8px;
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .2s, border-color .2s;
+}
+
+.category:hover {
+  transform: translateY(-3px);
+  border-color: var(--pink);
+}
+
+.category .emoji {
+  font-size: 29px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.category strong {
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #f0e4e7;
+  border-radius: 19px;
+  overflow: hidden;
+}
+
+.card-content {
+  padding: 17px;
+}
+
+.photo {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 58px;
+  background: linear-gradient(135deg, #f9e3ea, #f5d3df);
+}
+
+.photo.hair {
+  background: linear-gradient(135deg, #e9d8ca, #f8e8dc);
+}
+
+.photo.nails {
+  background: linear-gradient(135deg, #eed9ef, #f8e5e7);
+}
+
+.card h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 9px;
+  margin: 0 4px 5px 0;
+  border-radius: 20px;
+  background: var(--light-pink);
+  color: #88445b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.price {
+  font-weight: 900;
+  font-size: 19px;
+  margin: 12px 0;
+}
+
+.card .btn {
+  width: 100%;
+}
+
+.jobs {
+  background: #f8edf0;
+  border-radius: 25px;
+  padding: 28px 20px;
+}
+
+.job {
+  background: white;
+  border-radius: 15px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.job h3 {
+  margin: 0 0 7px;
+  font-size: 16px;
+}
+
+.job p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.job-pay {
+  font-weight: 900;
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  padding: 24px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid #f0e4e7;
+}
+
+.panel h2 {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0;
+}
+
+form {
+  display: grid;
+  gap: 13px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #eadde1;
+  background: #fffdfd;
+  border-radius: 10px;
+  color: var(--dark);
+}
+
+textarea {
+  min-height: 85px;
+  resize: vertical;
+}
+
+.note {
+  background: #fff4df;
+  color: #70542d;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  background: var(--dark);
+  color: white;
+  padding: 35px 20px;
+}
+
+footer p {
+  color: #d7c7cd;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+footer a {
+  color: #f5b6cb;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.empty {
+  padding: 20px;
+  color: var(--muted);
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 700px) {
+  .nav {
+    padding: 14px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+  }
+
+  .hero {
+    padding-top: 48px;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .search-box .btn {
+    width: 100%;
+  }
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .job {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .job .btn {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav class="nav">
+    <div class="logo">GlamLink <span>Pro.</span></div>
+
+    <div class="nav-links">
+      <a href="#professionals">Discover</a>
+      <a href="#freelance">Freelance</a>
+      <a href="#request">Book</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <div class="hero">
+    <div class="eyebrow">Beauty meets opportunity</div>
+
+    <h1>Your beauty.<br>Your business.<br><em>Your next booking.</em></h1>
+
+    <p>
+      Discover talented beauty professionals, request your
+      favorite services, or find your next freelance opportunity.
+    </p>
+
+    <div class="search-box">
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Try braids, lashes, nails..."
+        aria-label="Search beauty professionals"
+      >
+      <button class="btn" id="searchButton">Explore beauty</button>
+    </div>
+
+    <div class="quick-actions">
+      <a class="btn btn-pink" href="#professionals">Book a service</a>
+      <a class="btn btn-light" href="#freelance">Find freelance work</a>
+    </div>
+  </div>
+
+  <section id="categories">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">Explore your beauty</div>
+        <h2>What are you looking for?</h2>
+        <p>Find the right professional for your next look.</p>
+      </div>
+    </div>
+
+    <div class="categories">
+      <button class="category" data-category="Braiding">
+        <span class="emoji">💇🏽‍♀️</span>
+        <strong>Braiding & Hair</strong>
+      </button>
+
+      <button class="category" data-category="Lashes">
+        <span class="emoji">👁️</span>
+        <strong>Lashes & Brows</strong>
+      </button>
+
+      <button class="category" data-category="Nails">
+        <span class="emoji">💅</span>
+        <strong>Nails</strong>
+      </button>
+
+      <button class="category" data-category="Makeup">
+        <span class="emoji">💄</span>
+        <strong>Makeup</strong>
+      </button>
+
+      <button class="category" data-category="Skincare">
+        <span class="emoji">🧖🏽‍♀️</span>
+        <strong>Skincare</strong>
+      </button>
+
+      <button class="category" data-category="Hairstyling">
+        <span class="emoji">✨</span>
+        <strong>Hairstyling</strong>
+      </button>
+    </div>
+  </section>
+
+  <section id="professionals">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">Meet the talent</div>
+        <h2>Beauty professionals</h2>
+        <p>Explore sample profiles and services.</p>
+      </div>
+      <button class="btn btn-light" id="showAllButton">Show all</button>
+    </div>
+
+    <div class="grid" id="professionalGrid">
+
+      <article class="card professional"
+        data-category="Braiding"
+        data-search="braiding knotless braids protective styles hair">
+        <div class="photo hair">💇🏽‍♀️</div>
+        <div class="card-content">
+          <span class="tag">Braiding</span>
+          <h3>Protective Style Specialist</h3>
+          <p>Sample profile · Knotless braids and protective styles.</p>
+          <div class="price">From $120</div>
+          <button class="btn book-button"
+            data-service="Braiding">Request service</button>
+        </div>
+      </article>
+
+      <article class="card professional"
+        data-category="Lashes"
+        data-search="lashes eyelash extensions lash technician">
+        <div class="photo">👁️</div>
+        <div class="card-content">
+          <span class="tag">Lashes</span>
+          <h3>Lash Artist</h3>
+          <p>Sample profile · Classic and volume lash looks.</p>
+          <div class="price">From $85</div>
+          <button class="btn book-button"
+            data-service="Lashes">Request service</button>
+        </div>
+      </article>
+
+      <article class="card professional"
+        data-category="Nails"
+        data-search="nails manicure nail art gel nails">
+        <div class="photo nails">💅</div>
+        <div class="card-content">
+          <span class="tag">Nails</span>
+          <h3>Nail Artist</h3>
+          <p>Sample profile · Manicures, gel polish, and nail art.</p>
+          <div class="price">From $55</div>
+          <button class="btn book-button"
+            data-service="Nails">Request service</button>
+        </div>
+      </article>
+
+      <article class="card professional"
+        data-category="Makeup"
+        data-search="makeup bridal glam special event">
+        <div class="photo">💄</div>
+        <div class="card-content">
+          <span class="tag">Makeup</span>
+          <h3>Makeup Artist</h3>
+          <p>Sample profile · Glam looks for events and celebrations.</p>
+          <div class="price">From $95</div>
+          <button class="btn book-button"
+            data-service="Makeup">Request service</button>
+        </div>
+      </article>
+
+      <article class="card professional"
+        data-category="Skincare"
+        data-search="skincare facial beauty skin care">
+        <div class="photo">🧖🏽‍♀️</div>
+        <div class="card-content">
+          <span class="tag">Skincare</span>
+          <h3>Skincare Professional</h3>
+          <p>Sample profile · Facial and skincare services.</p>
+          <div class="price">From $75</div>
+          <button class="btn book-button"
+            data-service="Skincare">Request service</button>
+        </div>
+      </article>
+
+      <article class="card professional"
+        data-category="Hairstyling"
+        data-search="hairstyling silk press curls blowout">
+        <div class="photo hair">✨</div>
+        <div class="card-content">
+          <span class="tag">Hairstyling</span>
+          <h3>Hair Styling Professional</h3>
+          <p>Sample profile · Styling, curls, and special occasions.</p>
+          <div class="price">From $70</div>
+          <button class="btn book-button"
+            data-service="Hairstyling">Request service</button>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="note">
+      These are demonstration profiles, not verified professionals.
+      Prices are examples, not confirmed offers.
+    </p>
+  </section>
+
+  <section id="freelance">
+    <div class="jobs">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Make your next move</div>
+          <h2>Freelance opportunities</h2>
+          <p>Explore example opportunities for beauty professionals.</p>
+        </div>
+      </div>
+
+      <div id="jobList">
+        <article class="job">
+          <div>
+            <h3>Weekend Braider Needed</h3>
+            <p>Hair salon · Example opportunity</p>
+            <p>Saturday · Experience with knotless braids</p>
+          </div>
+          <div>
+            <div class="job-pay">$180 / shift</div>
+            <button class="btn apply-button"
+              data-job="Weekend Braider Needed">Express interest</button>
+          </div>
+        </article>
+
+        <article class="job">
+          <div>
+            <h3>Freelance Lash Technician</h3>
+            <p>Beauty studio · Example opportunity</p>
+            <p>Flexible schedule · Lash extension experience</p>
+          </div>
+          <div>
+            <div class="job-pay">$150 / shift</div>
+            <button class="btn apply-button"
+              data-job="Freelance Lash Technician">Express interest</button>
+          </div>
+        </article>
+
+        <article class="job">
+          <div>
+            <h3>Makeup Artist for Events</h3>
+            <p>Event beauty team · Example opportunity</p>
+            <p>Weekend availability · Portfolio preferred</p>
+          </div>
+          <div>
+            <div class="job-pay">$200 / shift</div>
+            <button class="btn apply-button"
+              data-job="Makeup Artist for Events">Express interest</button>
+          </div>
+        </article>
+      </div>
+
+      <p class="note">
+        Sample opportunities only. No real employer has posted
+        these jobs, and no paid work is guaranteed.
+      </p>
+    </div>
+  </section>
+
+  <section id="request">
+    <div class="split">
+
+      <div class="panel">
+        <div class="eyebrow">For customers</div>
+        <h2>Request a beauty service</h2>
+        <p>
+          Tell us what you need. This demo will prepare your
+          request for you to review.
+        </p>
+
+        <form id="bookingForm">
+          <div>
+            <label for="customerName">Your name</label>
+            <input id="customerName" required
+              placeholder="Enter your name">
+          </div>
+
+          <div>
+            <label for="customerEmail">Email</label>
+            <input id="customerEmail" type="email" required
+              placeholder="you@example.com">
+          </div>
+
+          <div>
+            <label for="serviceType">Service</label>
+            <select id="serviceType" required>
+              <option value="">Choose a service</option>
+              <option>Braiding</option>
+              <option>Lashes</option>
+              <option>Nails</option>
+              <option>Makeup</option>
+              <option>Skincare</option>
+              <option>Hairstyling</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="serviceLocation">Preferred service location</label>
+            <select id="serviceLocation" required>
+              <option value="">Choose a location</option>
+              <option>At the professional's studio</option>
+              <option>At my location</option>
+              <option>Either works</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="appointmentDate">Preferred date</label>
+            <input id="appointmentDate" type="date" required>
+          </div>
+
+          <div>
+            <label for="bookingNotes">Additional details</label>
+            <textarea id="bookingNotes"
+              placeholder="Describe the look you want..."></textarea>
+          </div>
+
+          <button class="btn btn-pink" type="submit">
+            Prepare my request
+          </button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="eyebrow">For beauty professionals</div>
+        <h2>Share a freelance opportunity</h2>
+        <p>
+          Salons and beauty businesses can preview a new
+          opportunity in the demo listing.
+        </p>
+
+        <form id="jobForm">
+          <div>
+            <label for="businessName">Salon or business name</label>
+            <input id="businessName" required
+              placeholder="Your business name">
+          </div>
+
+          <div>
+            <label for="jobTitle">Opportunity title</label>
+            <input id="jobTitle" required
+              placeholder="Example: Weekend Braider">
+          </div>
+
+          <div>
+            <label for="jobCategory">Beauty specialty</label>
+            <select id="jobCategory" required>
+              <option value="">Choose a specialty</option>
+              <option>Braiding</option>
+              <option>Lashes</option>
+              <option>Nails</option>
+              <option>Makeup</option>
+              <option>Skincare</option>
+              <option>Hairstyling</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="jobPay">Pay offered in dollars</label>
+            <input id="jobPay" type="number"
+              min="1" max="100000" required
+              placeholder="Example: 180">
+          </div>
+
+          <div>
+            <label for="jobSchedule">Schedule or date</label>
+            <input id="jobSchedule" required
+              placeholder="Example: Saturday, 10 AM–6 PM">
+          </div>
+
+          <div>
+            <label for="jobDetails">Opportunity details</label>
+            <textarea id="jobDetails"
+              placeholder="Skills, experience, and duties..."></textarea>
+          </div>
+
+          <button class="btn" type="submit">
+            Preview opportunity
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="logo">GlamLink <span>Pro.</span></div>
+  <p>
+    Your beauty. Your business. Your next booking.<br>
+    Connecting beauty talent with new opportunities.
+  </p>
+  <p>© <span id="year"></span> GlamLink Pro · Prototype</p>
+</footer>
+
+<script>
+const professionals = [
+  ...document.querySelectorAll(".professional")
+];
+
+const searchInput = document.getElementById("searchInput");
+
+function filterProfessionals(query = "", category = "") {
+  const normalizedQuery = query.toLowerCase().trim();
+  let visibleCount = 0;
+
+  professionals.forEach(card => {
+    const searchableText =
+      (card.dataset.search + " " + card.innerText).toLowerCase();
+
+    const matchesQuery = !normalizedQuery ||
+      searchableText.includes(normalizedQuery);
+
+    const matchesCategory = !category ||
+      card.dataset.category === category;
+
+    const show = matchesQuery && matchesCategory;
+    card.classList.toggle("hidden", !show);
+
+    if (show) visibleCount++;
+  });
+
+  let emptyMessage = document.getElementById("emptyMessage");
+
+  if (!emptyMessage) {
+    emptyMessage = document.createElement("p");
+    emptyMessage.id = "emptyMessage";
+    emptyMessage.className = "empty";
+    emptyMessage.textContent =
+      "No matching sample profiles. Try another search.";
+    document.getElementById("professionalGrid")
+      .appendChild(emptyMessage);
+  }
+
+  emptyMessage.classList.toggle("hidden", visibleCount !== 0);
+
+  document.getElementById("professionals")
+    .scrollIntoView({ behavior: "smooth" });
+}
+
+document.getElementById("searchButton").addEventListener("click", () => {
+  filterProfessionals(searchInput.value);
+});
+
+searchInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    filterProfessionals(searchInput.value);
+  }
+});
+
+document.querySelectorAll(".category").forEach(button => {
+  button.addEventListener("click", () => {
+    filterProfessionals("", button.dataset.category);
+  });
+});
+
+document.getElementById("showAllButton").addEventListener("click", () => {
+  searchInput.value = "";
+  filterProfessionalsWithoutScrolling();
+});
+
+function filterProfessionalsWithoutScrolling() {
+  professionals.forEach(card => card.classList.remove("hidden"));
+
+  const emptyMessage = document.getElementById("emptyMessage");
+  if (emptyMessage) emptyMessage.classList.add("hidden");
+}
+
+document.querySelectorAll(".book-button").forEach(button => {
+  button.addEventListener("click", () => {
+    document.getElementById("serviceType").value =
+      button.dataset.service;
+
+    document.getElementById("request")
+      .scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+document.querySelectorAll(".apply-button").forEach(button => {
+  button.addEventListener("click", () => {
+    const job = button.dataset.job;
+
+    alert(
+      "You selected: " + job +
+      "\\n\\nThis is a prototype. Applications are not submitted " +
+      "to a real employer yet."
+    );
+  });
+});
+
+document.getElementById("bookingForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const request = {
+    name: document.getElementById("customerName").value,
+    email: document.getElementById("customerEmail").value,
+    service: document.getElementById("serviceType").value,
+    location: document.getElementById("serviceLocation").value,
+    date: document.getElementById("appointmentDate").value,
+    notes: document.getElementById("bookingNotes").value
+  };
+
+  alert(
+    "Your demo request is ready!\\n\\n" +
+    "Service: " + request.service +
+    "\\nPreferred date: " + request.date +
+    "\\nLocation: " + request.location +
+    "\\n\\nThis prototype has not sent or saved your request. " +
+    "A real booking system will be added in a later version."
+  );
+});
+
+document.getElementById("jobForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const business = document.getElementById("businessName").value;
+  const title = document.getElementById("jobTitle").value;
+  const category = document.getElementById("jobCategory").value;
+  const pay = document.getElementById("jobPay").value;
+  const schedule = document.getElementById("jobSchedule").value;
+  const details = document.getElementById("jobDetails").value;
+
+  const job = document.createElement("article");
+  job.className = "job";
+
+  const info = document.createElement("div");
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const businessLine = document.createElement("p");
+  businessLine.textContent = business + " · " + category;
+
+  const scheduleLine = document.createElement("p");
+  scheduleLine.textContent = schedule +
+    (details ? " · " + details : "");
+
+  info.append(heading, businessLine, scheduleLine);
+
+  const action = document.createElement("div");
+  const payLine = document.createElement("div");
+  payLine.className = "job-pay";
+  payLine.textContent = "$" + Number(pay).toLocaleString("en-US");
+
+  const demoLabel = document.createElement("p");
+  demoLabel.textContent = "Demo listing · Not publicly submitted";
+
+  action.append(payLine, demoLabel);
+  job.append(info, action);
+
+  document.getElementById("jobList").prepend(job);
+
+  event.target.reset();
+
+  alert(
+    "Your sample opportunity has been added to this page. " +
+    "It is not published for other users."
+  );
+
+  document.getElementById("freelance")
+    .scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+</script>
+
+</body>
+</html>
