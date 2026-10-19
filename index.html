@@ -870,6 +870,21 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
+  async function testGlamLinkDatabase() {
+  const { data, error } = await supabaseClient
+    .from("freelance_jobs")
+    .select("id, title, specialty, business_name, pay")
+    .limit(5);
+
+  if (error) {
+    console.error("GlamLink database error:", error.message);
+    alert("Database connection needs attention. Check the browser console.");
+    return;
+  }
+
+  console.log("GlamLink database connected!", data);
+  alert("Connected! Found " + data.length + " database job listings.");
+}
 const professionals = [
   ...document.querySelectorAll(".professional")
 ];
