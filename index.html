@@ -870,6 +870,27 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
+  async function loadGlamLinkJobs() {
+  const { data, error } = await supabaseClient
+    .from("freelance_jobs")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Could not load jobs:", error.message);
+    return;
+  }
+
+  console.log("GlamLink jobs from Supabase:", data);
+
+  alert(
+    "GlamLink connected! Found " +
+    data.length +
+    " jobs in your database."
+  );
+}
+
+loadGlamLinkJobs();
   async function testGlamLinkDatabase() {
   const { data, error } = await supabaseClient
     .from("freelance_jobs")
