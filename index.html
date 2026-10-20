@@ -1062,6 +1062,7 @@ document.getElementById("bookingForm").addEventListener("submit", event => {
 
 document.getElementById("jobForm").addEventListener("submit", async event => {
   event.preventDefault();
+  alert("The job form JavaScript is running!");
 
   const business = document.getElementById("businessName").value.trim();
   const title = document.getElementById("jobTitle").value.trim();
