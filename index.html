@@ -1009,54 +1009,99 @@ document.getElementById("bookingForm").addEventListener("submit", event => {
   );
 });
 
-document.getElementById("jobForm").addEventListener("submit", event => {
+document.getElementById("jobForm").addEventListener("submit", async event => {
   event.preventDefault();
 
-  const business = document.getElementById("businessName").value;
-  const title = document.getElementById("jobTitle").value;
+  const business = document.getElementById("businessName").value.trim();
+  const title = document.getElementById("jobTitle").value.trim();
   const category = document.getElementById("jobCategory").value;
-  const pay = document.getElementById("jobPay").value;
+  const pay = Number(document.getElementById("jobPay").value);
   const schedule = document.getElementById("jobSchedule").value;
-  const details = document.getElementById("jobDetails").value;
+  const details = document.getElementById("jobDetails").value.trim();
 
-  const job = document.createElement("article");
-  job.className = "job";
+  if (!business || !title || !category || !schedule || !Number.isFinite(pay) || pay < 0) {
+    alert("Please complete all required fields with valid information.");
+    return;
+  }
 
-  const info = document.createElement("div");
-  const heading = document.createElement("h3");
-  heading.textContent = title;
+  const submitButton = event.target.querySelector('button[type="submit"]');
 
-  const businessLine = document.createElement("p");
-  businessLine.textContent = business + " · " + category;
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = "Publishing...";
+  }
 
-  const scheduleLine = document.createElement("p");
-  scheduleLine.textContent = schedule +
-    (details ? " · " + details : "");
+  try {
+    const { data, error } = await supabaseClient
+      .from("freelance_jobs")
+      .insert([
+        {
+          business_name: business,
+          title: title,
+          specialty: category,
+          pay: pay,
+          schedule: schedule,
+          description: details,
+          city: "Littleton, CO"
+        }
+      ])
+      .select();
 
-  info.append(heading, businessLine, scheduleLine);
+    if (error) {
+      console.error("Supabase job submission failed:", error.message);
+      alert(
+        "The job could not be published yet. " +
+        "Your database permissions may need to be configured. " +
+        "Please try again after setup."
+      );
+      return;
+    }
 
-  const action = document.createElement("div");
-  const payLine = document.createElement("div");
-  payLine.className = "job-pay";
-  payLine.textContent = "$" + Number(pay).toLocaleString("en-US");
+    const job = document.createElement("article");
+    job.className = "job";
 
-  const demoLabel = document.createElement("p");
-  demoLabel.textContent = "Demo listing · Not publicly submitted";
+    const info = document.createElement("div");
 
-  action.append(payLine, demoLabel);
-  job.append(info, action);
+    const heading = document.createElement("h3");
+    heading.textContent = title;
 
-  document.getElementById("jobList").prepend(job);
+    const businessLine = document.createElement("p");
+    businessLine.textContent = business + " · " + category;
 
-  event.target.reset();
+    const scheduleLine = document.createElement("p");
+    scheduleLine.textContent = schedule + (details ? " · " + details : "");
 
-  alert(
-    "Your sample opportunity has been added to this page. " +
-    "It is not published for other users."
-  );
+    info.append(heading, businessLine, scheduleLine);
 
-  document.getElementById("freelance")
-    .scrollIntoView({ behavior: "smooth" });
+    const action = document.createElement("div");
+
+    const payLine = document.createElement("div");
+    payLine.className = "job-pay";
+    payLine.textContent = "$" + pay.toLocaleString("en-US");
+
+    const publishedLabel = document.createElement("p");
+    publishedLabel.textContent = "Saved to GlamLink Pro";
+
+    action.append(payLine, publishedLabel);
+    job.append(info, action);
+
+    document.getElementById("jobList").prepend(job);
+    event.target.reset();
+
+    alert("Success! Your job was saved to the GlamLink Pro database.");
+
+    document.getElementById("freelance")
+      .scrollIntoView({ behavior: "smooth" });
+
+  } catch (error) {
+    console.error("Unexpected job submission error:", error);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = "Post Opportunity";
+    }
+  }
 });
 
 document.getElementById("year").textContent =
