@@ -871,6 +871,13 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
   async function loadGlamLinkJobs() {
+  const jobList = document.getElementById("jobList");
+
+  if (!jobList) {
+    console.error("Could not find jobList.");
+    return;
+  }
+
   const { data, error } = await supabaseClient
     .from("freelance_jobs")
     .select("*")
@@ -881,6 +888,51 @@ const supabaseClient = window.supabase.createClient(
     return;
   }
 
+  jobList.replaceChildren();
+
+  if (!data || data.length === 0) {
+    const message = document.createElement("p");
+    message.textContent = "No opportunities posted yet. Check back soon!";
+    jobList.appendChild(message);
+    return;
+  }
+
+  data.forEach(item => {
+    const job = document.createElement("article");
+    job.className = "job";
+
+    const info = document.createElement("div");
+    const heading = document.createElement("h3");
+    heading.textContent = item.title || "Beauty Opportunity";
+
+    const businessLine = document.createElement("p");
+    businessLine.textContent =
+      (item.business_name || "Beauty Business") +
+      " · " + (item.specialty || "Beauty");
+
+    const scheduleLine = document.createElement("p");
+    scheduleLine.textContent =
+      (item.schedule || "Schedule not specified") +
+      (item.description ? " · " + item.description : "");
+
+    info.append(heading, businessLine, scheduleLine);
+
+    const action = document.createElement("div");
+    const payLine = document.createElement("div");
+    payLine.className = "job-pay";
+    payLine.textContent = item.pay != null
+      ? "$" + Number(item.pay).toLocaleString("en-US")
+      : "Pay not listed";
+
+    const label = document.createElement("p");
+    label.textContent = item.city || "GlamLink Pro";
+
+    action.append(payLine, label);
+    job.append(info, action);
+    jobList.appendChild(job);
+  });
+}
+
   console.log("GlamLink jobs from Supabase:", data);
 
   alert(
@@ -890,7 +942,6 @@ const supabaseClient = window.supabase.createClient(
   );
 }
 
-alert("GlamLink JavaScript is running!");
 loadGlamLinkJobs();
   
 const professionals = [
