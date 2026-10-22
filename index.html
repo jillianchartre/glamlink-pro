@@ -927,7 +927,95 @@ const supabaseClient = window.supabase.createClient(
     const label = document.createElement("p");
     label.textContent = item.city || "GlamLink Pro";
 
-    action.append(payLine, label);
+      const applyButton = document.createElement("button");
+    applyButton.type = "button";
+    applyButton.className = "btn btn-pink";
+    applyButton.textContent = "Apply Now";
+    applyButton.addEventListener("click", () => {
+      const existingForm = document.getElementById("applicationForm");
+      if (existingForm) {
+        existingForm.remove();
+      }
+      const form = document.createElement("form");
+      form.id = "applicationForm";
+      form.className = "panel";
+      form.style.marginTop = "20px";
+      const formHeading = document.createElement("h3");
+      formHeading.textContent = "Apply for " + (item.title || "this opportunity");
+      const nameLabel = document.createElement("label");
+      nameLabel.textContent = "Your full name";
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.name = "applicantName";
+      nameInput.required = true;
+      nameInput.autocomplete = "name";
+      const emailLabel = document.createElement("label");
+      emailLabel.textContent = "Your email";
+      const emailInput = document.createElement("input");
+      emailInput.type = "email";
+      emailInput.name = "applicantEmail";
+      emailInput.required = true;
+      emailInput.autocomplete = "email";
+      const messageLabel = document.createElement("label");
+      messageLabel.textContent = "Message to the business";
+      const messageInput = document.createElement("textarea");
+      messageInput.name = "message";
+      messageInput.rows = 4;
+      messageInput.placeholder = "Tell the business a little about yourself.";
+      const submitButton = document.createElement("button");
+      submitButton.type = "submit";
+      submitButton.className = "btn btn-pink";
+      submitButton.textContent = "Submit Application";
+      const cancelButton = document.createElement("button");
+      cancelButton.type = "button";
+      cancelButton.className = "btn btn-light";
+      cancelButton.style.marginLeft = "8px";
+      cancelButton.textContent = "Cancel";
+      cancelButton.addEventListener("click", () => form.remove());
+      form.append(
+        formHeading,
+        nameLabel,
+        nameInput,
+        emailLabel,
+        emailInput,
+        messageLabel,
+        messageInput,
+        submitButton,
+        cancelButton
+      );
+      jobList.after(form);
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+        try {
+          const { error } = await supabaseClient
+            .from("job_applications")
+            .insert([{
+              job_id: item.id,
+              applicant_name: nameInput.value.trim(),
+              applicant_email: emailInput.value.trim(),
+              message: messageInput.value.trim()
+            }]);
+          if (error) {
+            console.error("Application submission error:", error.message);
+            alert("Your application could not be submitted yet. Please try again.");
+            submitButton.disabled = false;
+            submitButton.textContent = "Submit Application";
+            return;
+          }
+          alert("Your application was submitted successfully!");
+          form.remove();
+        } catch (error) {
+          console.error("Unexpected application error:", error);
+          alert("Something went wrong. Please try again.");
+          submitButton.disabled = false;
+          submitButton.textContent = "Submit Application";
+        }
+      });
+    });
+    action.append(payLine, label, applyButton);
     job.append(info, action);
     jobList.appendChild(job);
   });
