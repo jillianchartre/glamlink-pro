@@ -1328,7 +1328,139 @@ jobForm.addEventListener("submit", event => {
     }
   });
 });
-
+// GlamLink Pro business account authentication
+const businessSignupForm = document.getElementById("businessSignupForm");
+const businessLoginForm = document.getElementById("businessLoginForm");
+const businessAuthMessage = document.getElementById("businessAuthMessage");
+const businessLogoutButton = document.getElementById("businessLogoutButton");
+function showBusinessAuthMessage(message) {
+  businessAuthMessage.textContent = message;
+}
+async function saveBusinessProfile(user, businessName) {
+  if (!user || !user.id || !user.email) {
+    throw new Error("Your account details could not be verified.");
+  }
+  const { error } = await supabaseClient
+    .from("business_profiles")
+    .upsert({
+      id: user.id,
+      business_name:
+        businessName ||
+        user.user_metadata?.business_name ||
+        "My Business",
+      contact_email: user.email
+    });
+  if (error) {
+    console.error("Business profile error:", error.message);
+    throw new Error("Your account works, but your business profile could not be saved. Please sign in again or contact support.");
+  }
+}
+async function updateBusinessAuthStatus() {
+  const { data, error } = await supabaseClient.auth.getSession();
+  if (error) {
+    showBusinessAuthMessage("Could not check your sign-in status. Please refresh.");
+    return;
+  }
+  const user = data.session?.user;
+  businessLogoutButton.hidden = !user;
+  if (user) {
+    showBusinessAuthMessage(
+      "Signed in as " + user.email
+    );
+  }
+}
+businessSignupForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const businessName =
+    document.getElementById("signupBusinessName").value.trim();
+  const email =
+    document.getElementById("signupEmail").value.trim();
+  const password =
+    document.getElementById("signupPassword").value;
+  if (!businessName || !email || password.length < 8) {
+    showBusinessAuthMessage(
+      "Enter your business name, a valid email, and a password of at least 8 characters."
+    );
+    return;
+  }
+  const button = businessSignupForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  button.textContent = "Creating account...";
+  try {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          business_name: businessName
+        }
+      }
+    });
+    if (error) throw error;
+    if (data.session && data.user) {
+      await saveBusinessProfile(data.user, businessName);
+      businessSignupForm.reset();
+      showBusinessAuthMessage(
+        "Your account is ready! You are signed in as " + data.user.email
+      );
+      await updateBusinessAuthStatus();
+    } else {
+      showBusinessAuthMessage(
+        "Account created! Check your email for a confirmation link. After confirming, return here and sign in to finish setting up your business profile."
+      );
+    }
+  } catch (error) {
+    console.error("Business registration error:", error.message);
+    showBusinessAuthMessage(error.message || "Could not create your account. Please try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create Account";
+  }
+});
+businessLoginForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const email =
+    document.getElementById("loginEmail").value.trim();
+  const password =
+    document.getElementById("loginPassword").value;
+  const button = businessLoginForm.querySelector('button[type="submit"]');
+  button.disabled = true;
+  button.textContent = "Signing in...";
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+    if (error) throw error;
+    const user = data.user;
+    const businessName =
+      user.user_metadata?.business_name || "My Business";
+    await saveBusinessProfile(user, businessName);
+    businessLoginForm.reset();
+    showBusinessAuthMessage("Welcome back, " + businessName + "!");
+    await updateBusinessAuthStatus();
+  } catch (error) {
+    console.error("Business sign-in error:", error.message);
+    showBusinessAuthMessage(error.message || "Could not sign in. Please try again.");
+  } finally {
+    button.disabled = false;
+    button.textContent = "Sign In";
+  }
+});
+businessLogoutButton.addEventListener("click", async () => {
+  businessLogoutButton.disabled = true;
+  try {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) throw error;
+    showBusinessAuthMessage("You have signed out.");
+    businessLogoutButton.hidden = true;
+  } catch (error) {
+    showBusinessAuthMessage("Could not sign out. Please try again.");
+  } finally {
+    businessLogoutButton.disabled = false;
+  }
+});
+updateBusinessAuthStatus();
 document.getElementById("year").textContent =
   new Date().getFullYear();
 </script>
