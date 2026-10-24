@@ -1335,6 +1335,13 @@ const businessAuthMessage = document.getElementById("businessAuthMessage");
 const businessLogoutButton = document.getElementById("businessLogoutButton");
 function showBusinessAuthMessage(message) {
   businessAuthMessage.textContent = message;
+  businessAuthMessage.style.display = "block";
+  businessAuthMessage.style.padding = "12px";
+  businessAuthMessage.style.marginTop = "12px";
+  businessAuthMessage.style.background = "#fff0f4";
+  businessAuthMessage.style.borderRadius = "10px";
+  businessAuthMessage.style.color = "#77384d";
+  businessAuthMessage.style.whiteSpace = "pre-wrap";
 }
 async function saveBusinessProfile(user, businessName) {
   if (!user || !user.id || !user.email) {
