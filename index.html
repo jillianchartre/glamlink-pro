@@ -491,6 +491,72 @@ footer a {
     </div>
   </nav>
 </header>
+  <section id="business-account" class="section">
+  <div class="container">
+    <div class="panel">
+      <h2>Business Accounts</h2>
+      <p>Create an account to get started with GlamLink Pro.</p>
+      <form id="businessSignupForm">
+        <h3>Create Business Account</h3>
+        <label for="signupBusinessName">Business name</label>
+        <input
+          id="signupBusinessName"
+          type="text"
+          required
+          maxlength="100"
+          placeholder="Your salon or business name"
+        />
+        <label for="signupEmail">Business email</label>
+        <input
+          id="signupEmail"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
+        <label for="signupPassword">Password</label>
+        <input
+          id="signupPassword"
+          type="password"
+          required
+          minlength="8"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+        />
+        <button type="submit" class="btn btn-pink">
+          Create Account
+        </button>
+      </form>
+      <hr />
+      <form id="businessLoginForm">
+        <h3>Already have an account?</h3>
+        <label for="loginEmail">Business email</label>
+        <input
+          id="loginEmail"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
+        <label for="loginPassword">Password</label>
+        <input
+          id="loginPassword"
+          type="password"
+          required
+          autocomplete="current-password"
+          placeholder="Your password"
+        />
+        <button type="submit" class="btn btn-pink">
+          Sign In
+        </button>
+      </form>
+      <p id="businessAuthMessage" role="status" aria-live="polite"></p>
+      <button id="businessLogoutButton" type="button" class="btn btn-light" hidden>
+        Sign Out
+      </button>
+    </div>
+  </div>
+</section>
 
 <main>
 
