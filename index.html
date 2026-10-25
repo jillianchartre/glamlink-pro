@@ -1362,6 +1362,69 @@ async function saveBusinessProfile(user, businessName) {
     throw new Error("Your account works, but your business profile could not be saved. Please sign in again or contact support.");
   }
 }
+  
+const resetPasswordForm = document.getElementById("resetPasswordForm");
+
+// Show the form when Supabase recognizes a password recovery link.
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === "PASSWORD_RECOVERY") {
+    resetPasswordForm.hidden = false;
+    showBusinessAuthMessage(
+      "Password reset verified. Choose your new password below."
+    );
+    resetPasswordForm.scrollIntoView({ behavior: "smooth" });
+  }
+});
+
+resetPasswordForm.addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const password = document.getElementById("newPassword").value;
+  const confirmation =
+    document.getElementById("confirmNewPassword").value;
+
+  if (password.length < 8) {
+    showBusinessAuthMessage(
+      "Your password must be at least 8 characters."
+    );
+    return;
+  }
+
+  if (password !== confirmation) {
+    showBusinessAuthMessage("Your passwords do not match.");
+    return;
+  }
+
+  const button = resetPasswordForm.querySelector(
+    'button[type="submit"]'
+  );
+  button.disabled = true;
+  button.textContent = "Saving password...";
+
+  try {
+    const { error } = await supabaseClient.auth.updateUser({
+      password: password
+    });
+
+    if (error) throw error;
+
+    resetPasswordForm.reset();
+    resetPasswordForm.hidden = true;
+
+    showBusinessAuthMessage(
+      "Password updated successfully! You can now sign in with your new password."
+    );
+  } catch (error) {
+    console.error("Password reset error:", error.message);
+    showBusinessAuthMessage(
+      error.message || "Could not update your password. Please try again."
+    );
+  } finally {
+    button.disabled = false;
+    button.textContent = "Save New Password";
+  }
+});
+
 async function updateBusinessAuthStatus() {
   const { data, error } = await supabaseClient.auth.getSession();
   if (error) {
