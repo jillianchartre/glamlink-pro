@@ -1430,7 +1430,7 @@ const resetPasswordForm = document.getElementById("resetPasswordForm");
 // Show the form when Supabase recognizes a password recovery link.
 supabaseClient.auth.onAuthStateChange((event, session) => {
   if (event === "PASSWORD_RECOVERY") {
-    resetPasswordForm.hidden = false;
+    resetPasswordForm.classList.remove("hidden");
     showBusinessAuthMessage(
       "Password reset verified. Choose your new password below."
     );
