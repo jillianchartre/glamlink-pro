@@ -1487,20 +1487,51 @@ resetPasswordForm.addEventListener("submit", async event => {
   }
 });
 
+
 async function updateBusinessAuthStatus() {
   const { data, error } = await supabaseClient.auth.getSession();
+
   if (error) {
-    showBusinessAuthMessage("Could not check your sign-in status. Please refresh.");
+    showBusinessAuthMessage("Could not check your sign-in status.");
     return;
   }
+
   const user = data.session?.user;
   businessLogoutButton.hidden = !user;
-  if (user) {
+
+  if (!user) {
+    showBusinessAuthMessage("Please sign in to manage your business.");
+    return;
+  }
+
+  const { data: profile, error: profileError } =
+    await supabaseClient
+      .from("business_profiles")
+      .select("business_name, contact_email")
+      .eq("id", user.id)
+      .maybeSingle();
+
+  if (profileError) {
     showBusinessAuthMessage(
-      "Signed in as " + user.email
+      "Signed in as " + user.email +
+      ". Your business profile could not be loaded."
+    );
+    return;
+  }
+
+  if (profile && profile.business_name) {
+    showBusinessAuthMessage(
+      "Welcome, " + profile.business_name +
+      "! You are signed in as " + user.email
+    );
+  } else {
+    showBusinessAuthMessage(
+      "Signed in as " + user.email +
+      ". Please complete your business profile."
     );
   }
 }
+
 businessSignupForm.addEventListener("submit", async event => {
   event.preventDefault();
   const businessName =
