@@ -565,6 +565,53 @@ footer a {
           Send Reset Email
         </button>
       </form>
+     <form id="resetPasswordForm" class="hidden">
+
+  <h3>Choose a New Password</h3>
+
+  <label for="newPassword">New password</label>
+
+  <input
+
+    id="newPassword"
+
+    type="password"
+
+    required
+
+    minlength="8"
+
+    autocomplete="new-password"
+
+    placeholder="At least 8 characters"
+
+  />
+
+  <label for="confirmNewPassword">Confirm new password</label>
+
+  <input
+
+    id="confirmNewPassword"
+
+    type="password"
+
+    required
+
+    minlength="8"
+
+    autocomplete="new-password"
+
+    placeholder="Enter your new password again"
+
+  />
+
+  <button type="submit" class="btn btn-pink">
+
+    Save New Password
+
+  </button>
+
+</form>
       <p id="businessAuthMessage" role="status" aria-live="polite"></p>
       <button id="businessLogoutButton" type="button" class="btn btn-light" hidden>
         Sign Out
